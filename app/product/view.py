@@ -35,7 +35,7 @@ class ProductView(Resource):
                 'status': 'error',
                 'message': 'Fields validation failed.',
                 'errors': errors,
-            }
+            }, 400
 
         ok = self.product_service.add_product({
             'name': str(product.get('name')),
@@ -48,12 +48,12 @@ class ProductView(Resource):
             return {
                 'status': 'error',
                 'message': 'Internal server error.'
-            }
+            }, 500
 
         return {
             'status': 'ok',
             'message': 'Successfully create new product.'
-        }
+        }, 200
 
     def get(self):
         sort_by = request.args.get('sort_by')
@@ -70,4 +70,4 @@ class ProductView(Resource):
             'status': 'ok',
             'message': 'Successfully fetch products.',
             'data': self.products_schema.dump(list_products)
-        }
+        }, 200
