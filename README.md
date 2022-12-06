@@ -25,7 +25,7 @@ of each layer. For example, if we want to replace from ``REST`` to ``gRPC``
 just replace the implementation of ``view`` layer to ``gRPC``, and vice versa for
 ``repository`` layer.
 
-## Usage
+## API Documentation
 ### Add Product
 ``POST http://localhost:8080/products``
 
