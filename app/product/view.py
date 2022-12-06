@@ -11,8 +11,8 @@ class ProductView(Resource):
         self.products_schema = ProductSerializer(many=True)
 
     def post(self):
-        json_user = request.get_json()
-        product = self.product_schema.load(json_user)
+        json_product = request.get_json()
+        product = self.product_schema.load(json_product)
 
         errors = []
         if product.get('name') is None:
