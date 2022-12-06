@@ -1,0 +1,49 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15.1-alpine3.17
+    restart: always
+    environment:
+      - POSTGRES_USER=flaskproduct
+      - POSTGRES_PASSWORD=flaskproductsecret
+      - POSTGRES_DB=flaskproductdb
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+      - ./create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+
+  cache:
+    image: redis:6.2.7-alpine3.17
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --requirepass flaskproductsecret
+    volumes:
+      - cache:/data
+
+  app:
+    build: ./app
+    depends_on:
+      - db
+      - cache
+    ports:
+      - '8080:8080'
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=flaskproduct
+      - DB_PASSWORD=flaskproductsecret
+      - DB_NAME=flaskproductdb
+      - REDIS_HOST=cache
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=flaskproductsecret
+    links:
+      - db
+      - cache
+
+volumes:
+  db:
+    driver: local
+  cache:
+    driver: local

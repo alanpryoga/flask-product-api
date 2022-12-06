@@ -1,0 +1,5 @@
+Flask
+flask-restful
+marshmallow
+psycopg2-binary
+redis
