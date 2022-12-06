@@ -17,17 +17,17 @@ class ProductView(Resource):
         errors = []
         if product.get('name') is None:
             errors.append({
-                'name': 'field name is required.',
+                'name': 'field name is mandatory.',
             })
 
         if product.get('price') is None or not isinstance(product.get('price'), int):
             errors.append({
-                'price': 'field price must be integer and required.'
+                'price': 'field price must be number and mandatory.'
             })
 
         if product.get('quantity') is None or not isinstance(product.get('quantity'), int):
             errors.append({
-                'quantity': 'field quantity must be integer and required.'
+                'quantity': 'field quantity must be number and mandatory.'
             })
 
         if len(errors) > 0:
